@@ -21,8 +21,10 @@ All photographs are stored locally in `assets/projects/`; visitors do not need D
 | Website asset | Drive source | Caption context |
 | --- | --- | --- |
 | combat.jpg | CUR SPIP Bid 2024, embedded image2.png in the Combat Robotics section | From CUR's 2024 annual report; exact capture date unconfirmed |
-| angel.jpg | CUR SPIP Bid 2024, embedded image3.png immediately before Wise Angel | Team photograph explicitly identified as 2023 in the report |
+| angel.jpg | CuR Overview Presentation, slide 6: https://docs.google.com/presentation/d/1lnqt91fDp72NvNrqNw_KHjfofOkp7jQADfBuBOuTZOs/edit | From CUR's 2024 overview; exact capture date unconfirmed |
 | minibots.jpg | CUR SPIP Bid 2024, embedded image4.png in the Minibots section | From CUR's 2024 annual report; exact capture date unconfirmed |
-| inmoov.jpg | InMoov 2020 (fun2).jpg: https://drive.google.com/file/d/1uegH1taaQjk1oqVVOvel8LWygW9xYjfC/view | Society archive, 2020 |
+| inmoov.jpg | InMoov 2020 (square).JPG: https://drive.google.com/file/d/15ugw6PvtblcES78hy7gLPdoWsO3c-v2u/view | Society archive, 2020 |
 
 The older Drone 2018 photographs were not used for Wise Angel, which the report says began in late 2022. Existing concept SVGs remain available as editable artwork; the four home-page project cards now use real photographs.
+
+User photo selections: C1 (Combat), W2 (Wise Angel), I6 (InMoov), M1 (Minibots).
