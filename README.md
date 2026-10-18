@@ -13,9 +13,9 @@ Open http://127.0.0.1:4173. Re-run the build and refresh after editing.
 
 ## Structure
 
-- `scripts/build.mjs`: shared header/footer, project content and five page templates.
+- `scripts/build.mjs`: shared header/footer, project content and four page templates.
 - `assets/style.css`: responsive blueprint visual system.
-- `assets/app.js`: mobile menu, event filters, active project navigation and reduced-motion-aware animations.
+- `assets/app.js`: mobile menu, active project navigation and reduced-motion-aware animations.
 - `assets/projects/*.jpg`: project photographs from the CUR Drive; source dates and provenance are in `docs/project-sources.md`.
 - `assets/*.svg`: editable concept artwork, including the illustrated hero.
 - `scripts/art.mjs`: editable source for the concept drawings.
@@ -26,10 +26,10 @@ Run `npm test` after building to check all local links, assets and fragment targ
 
 ## Content still needed
 
-Society logo and current group photograph; confirmation of current project activity; confirmed committee roles, names and portraits; actual events, times, locations and signup links; sponsors/logos; email, Instagram, mailing-list/Linktree and calendar URLs. Sample events and committee roles are clearly labelled. Contact placeholders are text, not dead links or fake forms.
+Confirmation of current project activity; committee portraits, if desired; confirmed event dates, times, locations and signup links; current sponsors/logos; Instagram, mailing-list and calendar URLs. The events page describes documented activities without inventing upcoming sessions. Committee names reflect the supplied roster. General enquiries use the CUR society email account.
 
 ## SRCF later
 
-Run `npm run build`, then upload the **contents** of `dist/` to the society's web directory. All local URLs are relative, so the site can run under a subdirectory. No server process is needed in production. No deployment has been performed.
+Run `npm run build`, then upload the **contents** of `dist/` to the society's web directory. All local URLs are relative, so the site can run under a subdirectory. No server process is needed in production. GitHub Pages publishes the main branch through `.github/workflows/pages.yml`. Local changes only reach the live site after an explicitly authorised push.
 
-Research, attribution and design decisions are in `docs/design-notes.md` and the site's preview credits page.
+Research, attribution and design decisions are in `docs/design-notes.md` and `docs/project-sources.md`.

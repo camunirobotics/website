@@ -28,3 +28,11 @@ All photographs are stored locally in `assets/projects/`; visitors do not need D
 The older Drone 2018 photographs were not used for Wise Angel, which the report says began in late 2022. Existing concept SVGs remain available as editable artwork; the four home-page project cards now use real photographs.
 
 User photo selections: C1 (Combat), W2 (Wise Angel), I6 (InMoov), M1 (Minibots).
+
+## Society logo
+
+Header uses the user-selected L4: `CuR_Logo_&_Text_white_no background.png` from https://drive.google.com/file/d/1wRSUudJbLRRoQXSgIs7etz0o0Ng9u7UU/view. The original transparent PNG is preserved as `assets/cur-logo.png`. The home-page hero retains the original workbench illustration.
+
+## Sponsorship photograph
+
+User-selected P1, the Combat team working in the FightFest pits, from Long Intro Day Presentation, slide 15: https://docs.google.com/presentation/d/1FYb0E4Y8lI7bzPSgWmc5zK-rzeuSDG2r80-nkCPKASQ/edit. Saved as `assets/sponsorship.jpg`; exact capture date unconfirmed.

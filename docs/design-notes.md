@@ -35,3 +35,21 @@ Round 2: taste inspector passed with explicit exceptions for blueprint lines/gri
 Self-assessment under the skill's strict placeholder caps: design 6.5, usability 8, creativity 7, content 5; overall 6.9. This reflects intentionally missing real society imagery/content, not a launch-readiness claim. Before launch, photography and confirmed content are the main improvements.
 
 Validation: five-page static build; 93 local link/asset and anchor checks; JavaScript syntax check; responsive home inspection at 1440, 768 and 390px; browser event-filter check; interactive pinned-stage inspection. No SRCF deployment performed.
+
+
+## Sponsorship copy revision — 18 October 2026
+
+Replaced promotional filler and sponsor placeholders with the society's project scope, accepted forms of support, possible collaboration and a direct sponsorship enquiry address. No unverified sponsor list, tiers, audience counts or benefits were imported.
+
+References reviewed for structure and tone (original CUR wording, not copied text):
+- Full Blue Racing: https://www.fullblueracing.co.uk/ — partners and direct contact.
+- CUES: https://www.cues.org.uk/partner-information/ — concrete ways for companies to work with students.
+- CUSF: https://www.cusf.co.uk/about/sponsorship/ — financial, in-kind and technical support; concise enquiry invitation.
+- Riviera Racing: https://rivieraracing.co.uk/ — industry partners, technical project context and contact.
+
+The enquiry address is the connected CUR society account, camunirobotics@gmail.com. Removed visible photo provenance notes at the user's request; original source records remain in docs/project-sources.md.
+
+
+## Whole-site copy revision — 18 October 2026
+
+Reviewed Full Blue Racing (https://www.fullblueracing.co.uk/), CUES (https://www.cues.org.uk/), CUSF (https://www.cusf.co.uk/) and Riviera Racing (https://rivieraracing.co.uk/) for concrete identity, project descriptions and joining/contact routes. Original CUR copy now uses the society name, descriptive section headings, documented project work and direct email links. Generic slogans and invented event listings were removed. Facts remain grounded in CUR's Drive records and the committee roster supplied by the user; no other society's membership figures, achievements, programme or promises were adopted.
