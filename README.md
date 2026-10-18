@@ -16,7 +16,8 @@ Open http://127.0.0.1:4173. Re-run the build and refresh after editing.
 - `scripts/build.mjs`: shared header/footer, project content and five page templates.
 - `assets/style.css`: responsive blueprint visual system.
 - `assets/app.js`: mobile menu, event filters, active project navigation and reduced-motion-aware animations.
-- `assets/*.svg`: original placeholder artwork. Replace image references in the templates with real photos when ready.
+- `assets/projects/*.jpg`: project photographs from the CUR Drive; source dates and provenance are in `docs/project-sources.md`.
+- `assets/*.svg`: editable concept artwork, including the illustrated hero.
 - `scripts/art.mjs`: editable source for the concept drawings.
 - `assets/vendor/`: pinned, locally served animation libraries and license notices.
 - `dist/`: generated static website, intentionally ignored by Git.
@@ -25,7 +26,7 @@ Run `npm test` after building to check all local links, assets and fragment targ
 
 ## Content still needed
 
-Society logo and group photograph; four project photographs; current project descriptions; confirmed committee roles, names and portraits; actual events, times, locations and signup links; sponsors/logos; email, Instagram, mailing-list/Linktree and calendar URLs. Sample events and committee roles are clearly labelled. Contact placeholders are text, not dead links or fake forms.
+Society logo and current group photograph; confirmation of current project activity; confirmed committee roles, names and portraits; actual events, times, locations and signup links; sponsors/logos; email, Instagram, mailing-list/Linktree and calendar URLs. Sample events and committee roles are clearly labelled. Contact placeholders are text, not dead links or fake forms.
 
 ## SRCF later
 

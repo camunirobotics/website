@@ -24,13 +24,17 @@ body,.hero,.projects,.page-heading,footer,.header,.intro,.join,.schedule,.commit
  .projects.is-pinned .text-link{margin-top:16px}
 }
 
-/* Atlas-style single scene pinning. The sidebar and content share one coordinate system. */
+/* Single scene pinning. The sidebar and content share one coordinate system. */
 .projects.is-pinned{height:100vh;align-items:center}
 .projects.is-pinned .project-rail{position:relative;top:auto;align-self:center;padding-top:0}
 .projects.is-pinned .project-chapters{position:relative;height:100%;min-width:0}
 .projects.is-pinned .project[hidden]{display:none!important}
 .projects.is-pinned .project-art{flex-shrink:0}
 .trace-progress{stroke-dasharray:1;stroke-dashoffset:1}
+/* Keep archive photographs complete within the existing project stage. */
+.project-photo img{display:block;height:clamp(220px,38vw,490px);object-fit:contain;background:var(--dark)}
+.project-photo figcaption{padding-top:14px;flex-wrap:wrap;line-height:1.5}
+@media(max-width:700px){.project-photo img{height:auto;max-height:420px;aspect-ratio:4/3}}
 /* The project rail uses the same 20px construction rhythm as its drawing sheet. */
 @media(min-width:701px){
  .projects{padding-inline:round(nearest,var(--space),20px);grid-template-columns:round(down,26%,20px) 1fr}
