@@ -1,0 +1,4 @@
+import {readFile,access,readdir} from 'node:fs/promises';import path from 'node:path';import assert from 'node:assert/strict';
+const pages=(await readdir('dist')).filter(f=>f.endsWith('.html'));let checked=0;
+for(const page of pages){const html=await readFile('dist/'+page,'utf8');assert.equal((html.match(/<h1[ >]/g)||[]).length,1,`${page}: one primary heading`);assert.match(html,/<html lang="en">/);for(const [,link]of html.matchAll(/(?:href|src)="([^"]+)"/g)){if(/^(https?:|mailto:|data:)/.test(link))continue;const [file,hash]=link.split('#');const target=path.join('dist',file||page);await access(target);if(hash){const text=await readFile(target,'utf8');assert.ok(text.includes(`id="${hash}"`),`${page}: broken anchor ${link}`)}checked++}}
+console.log(`Passed: ${pages.length} pages, ${checked} internal links/assets, anchor targets and document structure.`);
