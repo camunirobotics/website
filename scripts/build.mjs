@@ -15,6 +15,7 @@ const sponsors=`<section class="page-heading"><h1>Sponsorship</h1></section><sec
 const committeeMembers = [
  ['President','Tejas'],
  ['Vice President','Hassan'],
+ ['Committee Chair','Jash'],
  ['Treasurer','Felix'],
  ['Secretary','TBC'],
  ['Minibots / Unibots','Ivan'],
