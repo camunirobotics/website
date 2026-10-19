@@ -272,3 +272,38 @@ if (window.gsap && window.ScrollTrigger) {
   // Keep contexts intact in the back/forward cache; refresh restored geometry.
   window.addEventListener('pageshow', event => {if (event.persisted) ScrollTrigger.refresh();});
 }
+
+// Align mobile decorative rules to their nearest drawing-sheet surface. Only the
+// rule moves, so wrapping and the accessible click area retain their normal flow.
+{
+  const mobileGrid = matchMedia('(max-width: 700px)');
+  const rules = [...document.querySelectorAll('.text-link, .project-rail nav a, .society-activity:not(:last-child)')];
+  const surfaces = new Map();
+  rules.forEach(rule => {
+    let surface = rule.parentElement;
+    while (surface && !getComputedStyle(surface).backgroundImage.includes('linear-gradient')) surface = surface.parentElement;
+    if (surface) surfaces.set(rule, surface);
+  });
+  let gridFrame;
+  function alignMobileRules() {
+    cancelAnimationFrame(gridFrame);
+    gridFrame = requestAnimationFrame(() => {
+      if (!mobileGrid.matches) return;
+      surfaces.forEach((surface, rule) => {
+        if (!rule.getClientRects().length) return;
+        const bounds = rule.getBoundingClientRect(), grid = surface.getBoundingClientRect();
+        const left = bounds.left - grid.left, right = bounds.right - grid.left;
+        const baseline = bounds.bottom - 1 - grid.top;
+        rule.style.setProperty('--rule-left', `${Math.round(left / 20) * 20 - left}px`);
+        rule.style.setProperty('--rule-right', `${right - Math.round(right / 20) * 20}px`);
+        rule.style.setProperty('--rule-shift', `${Math.ceil((baseline - .01) / 20) * 20 - baseline}px`);
+      });
+    });
+  }
+  const gridResize = new ResizeObserver(alignMobileRules);
+  new Set(surfaces.values()).forEach(surface => gridResize.observe(surface));
+  mobileGrid.addEventListener('change', alignMobileRules);
+  window.addEventListener('resize', alignMobileRules);
+  document.fonts.ready.then(alignMobileRules);
+  alignMobileRules();
+}

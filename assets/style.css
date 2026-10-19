@@ -105,3 +105,13 @@ body,.hero,.projects,.page-heading,footer,.header,.intro,.join,.schedule,.commit
 .project-image-stage[hidden]{display:none}
 .project-image-stage img{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:contain;background:var(--dark);will-change:transform}
 .projects.is-pinned .project-photo>img{opacity:0}
+/* Mobile rules follow the actual grid, including after text wraps. */
+@media(max-width:700px){
+ :root{--space:20px}
+ .project-rail nav{column-gap:20px}
+ .text-link,.project-rail nav a,.society-activity:not(:last-child){position:relative;border-bottom-color:transparent}
+ .text-link::after,.project-rail nav a::after,.society-activity:not(:last-child)::after{content:"";position:absolute;left:var(--rule-left,0px);right:var(--rule-right,0px);bottom:-1px;height:1px;background:var(--rule-colour,currentColor);transform:translateY(var(--rule-shift,0px));pointer-events:none}
+ .project-rail nav a{--rule-colour:var(--line)}
+ .society-activity{--rule-colour:#bdcbc5}
+ .text-link:hover,.project-rail nav a:hover{text-decoration:none}
+}
