@@ -11,16 +11,6 @@ if(chapters.length){const observer=new IntersectionObserver(entries=>{for(const 
 if (window.gsap && window.ScrollTrigger) {
   gsap.registerPlugin(ScrollTrigger);
   const media = gsap.matchMedia();
-  media.add('(prefers-reduced-motion: no-preference)', () => {
-    gsap.from('.hero-copy > *', {y: 22, opacity: 0, duration: .75, stagger: .12});
-    if (document.querySelector('.hero-art')) {
-      gsap.from('.hero-art img', {opacity: 0, duration: .8});
-      gsap.to('.hero-art img', {y: -35, ease: 'none', scrollTrigger: {
-        trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true
-      }});
-    }
-  });
-
   media.add('(min-width: 701px) and (min-height: 700px) and (prefers-reduced-motion: no-preference)', () => {
     if (!chapters.length) return;
     const scene = document.querySelector('.projects');
@@ -41,7 +31,10 @@ if (window.gsap && window.ScrollTrigger) {
       y: gsap.quickSetter(group, 'y', 'px'),
       opacity: gsap.quickSetter(group, 'opacity')
     })));
-    const easeReveal = value => {const t = Math.max(0, Math.min(1, value)); return t * t * (3 - 2 * t);};
+    const easeReveal = value => {const t = Math.max(0, Math.min(1, value)); return t * t * t * (t * (t * 6 - 15) + 10);};
+    // Broader acceleration and deceleration for the large overview movements.
+    const choreographyCurve = gsap.parseEase('sine.inOut');
+    const easeChoreography = value => choreographyCurve(gsap.utils.clamp(0, 1, value));
     // Componentry's trade / stack / expand sequence, fitted to the right-hand stage.
     const stage = scene.querySelector('.project-chapters');
     const imageStage = document.createElement('div');
@@ -63,7 +56,11 @@ if (window.gsap && window.ScrollTrigger) {
     overview.innerHTML = chapters.map((chapter, i) => `<a class="overview-card" href="#${chapter.id}" data-overview-project="${i}"><img src="${images[i].getAttribute('src')}" alt=""><span>${chapter.querySelector('h3').textContent}</span></a>`).join('');
     stage.append(overview);
     const cards = [...overview.children];
-    const introFraction = 1 / 3;
+    const introFraction = 5 / 18;
+    const revealWindow = .24;
+    const motionDistance = () => Math.max(innerHeight * 9, 6300);
+    const overviewHoldDistance = () => Math.max(innerHeight * .4, 240);
+    const overviewHoldFraction = () => overviewHoldDistance() / (overviewHoldDistance() + motionDistance());
     let geometry;
     const mix = (a, b, t) => a + (b - a) * t;
     const clamp = gsap.utils.clamp(0, 1);
@@ -81,8 +78,8 @@ if (window.gsap && window.ScrollTrigger) {
       if (!geometry) return;
       const t = clamp(progress / introFraction);
       const {w, h, x, y, fw, fh} = geometry;
-      const move = clamp(t / .3), gather = clamp((t - .35) / .3);
-      const expand = clamp((t - .7) / .2);
+      const move = easeChoreography(t / .3), gather = easeChoreography((t - .35) / .3);
+      const expand = easeChoreography((t - .7) / .26);
       // Clear the lower cards while the stack still covers them. The expanding
       // frame moves upward, exposing anything left underneath it.
       const fade = 1 - clamp((t - .65) / .05);
@@ -108,7 +105,11 @@ if (window.gsap && window.ScrollTrigger) {
       overview.setAttribute('aria-hidden', String(t > .28));
     }
     let active = -1;
-    function render(progress) {
+    function render(scrollProgress) {
+      // Give the overview some reading space before starting the choreography.
+      // Add distance rather than shortening the existing movement intervals.
+      const hold = overviewHoldFraction();
+      const progress = clamp((scrollProgress - hold) / (1 - hold));
       const overviewActive = progress < introFraction;
       renderOverview(progress);
       const chapterProgress = clamp((progress - introFraction) / (1 - introFraction));
@@ -142,23 +143,24 @@ if (window.gsap && window.ScrollTrigger) {
       // Atlas's rise-and-fade reveal, driven by the same scroll position as the
       // chapter. Exit completes before the chapter swaps; no layered text or timers.
       copySetters[index].forEach((set, group) => {
-        const entering = index === 0 ? (overviewActive ? overviewReveal : 1) : easeReveal((local - group * .025) / .16);
-        const leaving = index === chapters.length - 1 ? 0 : easeReveal((local - .82 + group * .025) / .18);
+        const entering = index === 0 ? (overviewActive ? overviewReveal : 1) : easeReveal((local - group * .025) / revealWindow);
+        const leaving = index === chapters.length - 1 ? 0 : easeReveal((local - (1 - revealWindow) + group * .025) / revealWindow);
         const focused = copyGroups[index][group].contains(document.activeElement);
         set.opacity(focused ? 1 : entering * (1 - leaving));
         set.y(focused ? 0 : (1 - entering) * 18 - leaving * 18);
       });
       // One fixed frame, with the reveal split across the same exit and entry
-      // windows as the heading. Halfway is the chapter boundary, in either direction.
-      const imageEnter = index === 0 ? 1 : easeReveal(local / .16);
-      const imageExit = index === chapters.length - 1 ? 0 : easeReveal((local - .82) / .18);
+      // windows as the heading. One continuous easing curve crosses the chapter
+      // boundary without stopping halfway through the image movement.
+      const imageEnter = index === 0 ? 1 : easeReveal(local / revealWindow);
+      const imageExit = index === chapters.length - 1 ? 0 : easeReveal((local - (1 - revealWindow)) / revealWindow);
       let from = index, to = index, reveal = 1;
-      if (index > 0 && local < .16) {
+      if (index > 0 && local < revealWindow) {
         from = index - 1;
-        reveal = .5 + imageEnter * .5;
-      } else if (index < chapters.length - 1 && local > .82) {
+        reveal = easeReveal(.5 + local / (2 * revealWindow));
+      } else if (index < chapters.length - 1 && local > 1 - revealWindow) {
         to = index + 1;
-        reveal = imageExit * .5;
+        reveal = easeReveal((local - (1 - revealWindow)) / (2 * revealWindow));
       }
       layers.forEach((layer, i) => {
         const visible = i === from || i === to;
@@ -180,17 +182,41 @@ if (window.gsap && window.ScrollTrigger) {
     }
     measureOverview();
     render(0);
-    const trigger = ScrollTrigger.create({
-      id: 'project-story', trigger: scene, start: 'top top',
-      end: () => '+=' + Math.max(innerHeight * 5, 3500),
-      pin: true, anticipatePin: 1, invalidateOnRefresh: true,
-      onUpdate: self => render(self.progress),
-      onRefresh: self => {alignRail(); measureOverview(); render(self.progress);}
+    function settleScroll(value) {
+      if (value <= 0 || value >= 1) return value;
+      const hold = overviewHoldFraction();
+      const progress = clamp((value - hold) / (1 - hold));
+      const overviewPosition = progress / introFraction;
+      const local = ((progress - introFraction) / (1 - introFraction) * chapters.length) % 1;
+      // Leave a settled reading view alone; only finish an interrupted transition.
+      if (value <= hold || (overviewPosition >= .65 && overviewPosition <= .7) ||
+          (progress >= introFraction && local >= revealWindow + .025 && local <= 1 - revealWindow)) return value;
+      const poses = [0, introFraction * .675,
+        ...chapters.map((_, i) => introFraction + (1 - introFraction) * (i + .45) / chapters.length)];
+      const target = gsap.utils.snap(poses, progress);
+      return hold + (1 - hold) * target;
+    }
+    const playhead = {progress: 0};
+    const animation = gsap.to(playhead, {
+      progress: 1, ease: 'none',
+      onUpdate: () => render(playhead.progress),
+      scrollTrigger: {
+        id: 'project-story', trigger: scene, start: 'top top',
+        end: () => '+=' + (motionDistance() + overviewHoldDistance()),
+        pin: true, anticipatePin: 1, invalidateOnRefresh: true,
+        scrub: .28,
+        snap: {snapTo: settleScroll, delay: .25, duration: {min: .6, max: 1.3},
+          ease: 'power2.inOut', inertia: false, directional: false},
+        onRefresh: self => {alignRail(); measureOverview(); playhead.progress = self.progress; render(self.progress);}
+      }
     });
+    const trigger = animation.scrollTrigger;
 
     function goToChapter(index, smooth) {
       const fraction = index < 0 ? 0 : introFraction + (1 - introFraction) * ((index + .4) / chapters.length);
-      const top = trigger.start + (trigger.end - trigger.start) * fraction;
+      const hold = overviewHoldFraction();
+      const target = index < 0 ? 0 : hold + (1 - hold) * fraction;
+      const top = trigger.start + (trigger.end - trigger.start) * target;
       window.scrollTo({top, behavior: smooth ? 'smooth' : 'instant'});
     }
     function syncHash() {
@@ -220,6 +246,7 @@ if (window.gsap && window.ScrollTrigger) {
     return () => {
       cancelAnimationFrame(readyFrame);
       trigger.kill(true);
+      animation.kill();
       scene.classList.remove('is-pinned', 'is-overview');
       overview.remove();
       imageStage.remove();
