@@ -36,3 +36,10 @@ Header uses the user-selected L4: `CuR_Logo_&_Text_white_no background.png` from
 ## Sponsorship photograph
 
 User-selected P1, the Combat team working in the FightFest pits, from Long Intro Day Presentation, slide 15: https://docs.google.com/presentation/d/1FYb0E4Y8lI7bzPSgWmc5zK-rzeuSDG2r80-nkCPKASQ/edit. Saved as `assets/sponsorship.jpg`; exact capture date unconfirmed.
+
+
+## Home-page structure — 19 October 2026
+
+The four project chapters are Combat Robotics, Wise Angel, InMoov and Unibots UK. Minibots now has a separate beginner section beneath them, using the existing society report photograph and teaching-plan description. Unibots uses the group photograph from CuR Overview Presentation, slide 16: https://docs.google.com/presentation/d/1lnqt91fDp72NvNrqNw_KHjfofOkp7jQADfBuBOuTZOs/edit (includes visiting universities; exact capture date unconfirmed).
+
+The user supplied the Project Fund terms: grants of up to £250; applications require a project proposal and budget; funded projects present at the end of the year. No extra eligibility restrictions, deadlines or award guarantees were added.

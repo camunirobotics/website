@@ -74,3 +74,19 @@ body,.hero,.projects,.page-heading,footer,.header,.intro,.join,.schedule,.commit
 .society-activity h2{font-size:clamp(34px,3.4vw,50px)}
 .society-activity p a{text-decoration:underline;text-underline-offset:4px;overflow-wrap:anywhere}
 @media(max-width:700px){.hero-copy h1{font-size:clamp(39px,10.8vw,68px)}.activities{padding-bottom:30px}.society-activity{grid-template-columns:1fr;gap:22px;padding:35px 0}}
+
+/* Ordinary document flow resumes after the four-project scroll sequence. */
+.welcome-section .text-link{margin-top:24px}
+.beginner-section,.fund-section{padding:85px var(--space);display:grid;grid-template-columns:1fr 1fr;gap:7vw;align-items:center;scroll-margin-top:30px;background-image:linear-gradient(rgba(138,180,197,.13) 1px,transparent 1px),linear-gradient(90deg,rgba(138,180,197,.13) 1px,transparent 1px);background-size:20px 20px}
+.beginner-section{background-color:var(--paper)}
+.beginner-section figure{min-width:0}
+.beginner-section img{width:100%;height:auto}
+.beginner-copy h2{font-size:clamp(36px,3.7vw,56px);margin-bottom:26px}
+.beginner-copy p{font-size:18px}
+.fund-section{background-color:var(--light);align-items:start}
+.fund-section h2{font-size:clamp(38px,4.2vw,62px)}
+.fund-amount{font-size:24px;margin-top:18px}
+.fund-section>div>p:not(.fund-amount){font-size:19px}
+.join{background-color:var(--blue);color:var(--paper)}
+.join .button{background:var(--mint);color:var(--ink)}
+@media(max-width:700px){.beginner-section,.fund-section{grid-template-columns:1fr;padding:55px var(--space);gap:30px}.beginner-copy p,.fund-section>div>p:not(.fund-amount){font-size:17px}.beginner-copy h2{font-size:38px}.fund-amount{font-size:22px;margin-top:14px}}

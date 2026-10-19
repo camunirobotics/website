@@ -36,9 +36,7 @@ if (window.gsap && window.ScrollTrigger) {
     scene.classList.add('is-pinned');
     const progressLine = trace.querySelector('.trace-progress');
     const imageSetters = images.map(image => ({
-      y: gsap.quickSetter(image, 'y', 'px'),
-      rotation: gsap.quickSetter(image, 'rotation', 'deg'),
-      scale: gsap.quickSetter(image, 'scale')
+      y: gsap.quickSetter(image, 'y', 'px')
     }));
     const copyGroups = chapters.map(chapter => [...chapter.querySelectorAll('.project-copy > div')]);
     const copySetters = copyGroups.map(groups => groups.map(group => ({
@@ -79,8 +77,6 @@ if (window.gsap && window.ScrollTrigger) {
       const imageEnter = index === 0 ? 1 : easeReveal(local / .16);
       const imageExit = index === chapters.length - 1 ? 0 : easeReveal((local - .82) / .18);
       imageSetters[index].y((1 - imageEnter) * 18 - imageExit * 18);
-      imageSetters[index].rotation((1 - imageEnter) * 3 - imageExit * 3);
-      imageSetters[index].scale(1 - (1 - imageEnter) * .025 - imageExit * .025);
       progressLine.style.strokeDashoffset = String(1 - progress);
     }
     function alignRail() {
@@ -107,6 +103,9 @@ if (window.gsap && window.ScrollTrigger) {
     function syncHash() {
       const index = location.hash === '#projects' ? 0 : chapters.findIndex(chapter => '#' + chapter.id === location.hash);
       if (index >= 0) goToChapter(index, false);
+      else if (['#minibots', '#project-fund', '#join'].includes(location.hash)) {
+        document.getElementById(location.hash.slice(1))?.scrollIntoView({behavior: 'instant', block: 'start'});
+      }
     }
     const entryLinks = [...document.querySelectorAll('a[href="#combat"], a[href="#projects"], a[href="index.html#projects"], [data-project-link]')];
     const handlers = entryLinks.map(link => {
@@ -143,7 +142,7 @@ if (window.gsap && window.ScrollTrigger) {
 
   media.add('(max-width: 700px) and (prefers-reduced-motion: no-preference), (max-height: 699px) and (prefers-reduced-motion: no-preference)', () => {
     chapters.forEach(project => gsap.fromTo(project.querySelector('img'),
-      {y: 12, scale: .97}, {y: -12, scale: 1.02, ease: 'none', scrollTrigger: {
+      {y: 8}, {y: -8, ease: 'none', scrollTrigger: {
         trigger: project, start: 'top bottom', end: 'bottom top', scrub: true
       }}));
   });
