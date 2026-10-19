@@ -35,11 +35,7 @@ if (window.gsap && window.ScrollTrigger) {
     rail.append(trace);
     scene.classList.add('is-pinned');
     const progressLine = trace.querySelector('.trace-progress');
-    const imageSetters = images.map(image => ({
-      y: gsap.quickSetter(image, 'y', 'px'),
-      rotation: gsap.quickSetter(image, 'rotation', 'deg'),
-      scale: gsap.quickSetter(image, 'scale')
-    }));
+    const captions = chapters.map(chapter => chapter.querySelector('figcaption'));
     const copyGroups = chapters.map(chapter => [...chapter.querySelectorAll('.project-copy > div')]);
     const copySetters = copyGroups.map(groups => groups.map(group => ({
       y: gsap.quickSetter(group, 'y', 'px'),
@@ -48,6 +44,19 @@ if (window.gsap && window.ScrollTrigger) {
     const easeReveal = value => {const t = Math.max(0, Math.min(1, value)); return t * t * (3 - 2 * t);};
     // Componentry's trade / stack / expand sequence, fitted to the right-hand stage.
     const stage = scene.querySelector('.project-chapters');
+    const imageStage = document.createElement('div');
+    imageStage.className = 'project-image-stage';
+    imageStage.setAttribute('aria-hidden', 'true');
+    const layers = images.map(image => {
+      const layer = image.cloneNode();
+      layer.alt = '';
+      layer.removeAttribute('width');
+      layer.removeAttribute('height');
+      imageStage.append(layer);
+      return layer;
+    });
+    stage.append(imageStage);
+    const layerSetters = layers.map(layer => gsap.quickSetter(layer, 'yPercent'));
     const overview = document.createElement('div');
     overview.className = 'project-overview';
     overview.setAttribute('aria-label', 'All four projects');
@@ -65,6 +74,7 @@ if (window.gsap && window.ScrollTrigger) {
       const bounds = stage.getBoundingClientRect();
       geometry = {w: bounds.width, h: bounds.height, x: frame.left - bounds.left,
         y: frame.top - bounds.top, fw: frame.width, fh: frame.height};
+      gsap.set(imageStage, {left: geometry.x, top: geometry.y, width: geometry.fw, height: geometry.fh});
       chapters[0].hidden = wasHidden;
     }
     function renderOverview(progress) {
@@ -138,14 +148,26 @@ if (window.gsap && window.ScrollTrigger) {
         set.opacity(focused ? 1 : entering * (1 - leaving));
         set.y(focused ? 0 : (1 - entering) * 18 - leaving * 18);
       });
-      // Match the heading's entrance/exit windows and hold the drawing exactly
-      // aligned throughout the reading interval. First/last chapters stay settled
-      // at the outer edges of the pinned story.
+      // One fixed frame, with the reveal split across the same exit and entry
+      // windows as the heading. Halfway is the chapter boundary, in either direction.
       const imageEnter = index === 0 ? 1 : easeReveal(local / .16);
       const imageExit = index === chapters.length - 1 ? 0 : easeReveal((local - .82) / .18);
-      imageSetters[index].y((1 - imageEnter) * 18 - imageExit * 18);
-      imageSetters[index].rotation((1 - imageEnter) * 3 - imageExit * 3);
-      imageSetters[index].scale(1 - (1 - imageEnter) * .025 - imageExit * .025);
+      let from = index, to = index, reveal = 1;
+      if (index > 0 && local < .16) {
+        from = index - 1;
+        reveal = .5 + imageEnter * .5;
+      } else if (index < chapters.length - 1 && local > .82) {
+        to = index + 1;
+        reveal = imageExit * .5;
+      }
+      layers.forEach((layer, i) => {
+        const visible = i === from || i === to;
+        layer.style.visibility = visible ? 'visible' : 'hidden';
+        layer.style.zIndex = i === to ? '2' : '1';
+        layerSetters[i](from === to ? 0 : i === to ? (1 - reveal) * 100 : -18 * reveal);
+      });
+      imageStage.hidden = overviewActive;
+      captions[index].style.opacity = String((overviewActive ? overviewReveal : imageEnter) * (1 - imageExit));
       progressLine.style.strokeDashoffset = String(1 - progress);
     }
     function alignRail() {
@@ -200,6 +222,8 @@ if (window.gsap && window.ScrollTrigger) {
       trigger.kill(true);
       scene.classList.remove('is-pinned', 'is-overview');
       overview.remove();
+      imageStage.remove();
+      captions.forEach(caption => caption.style.opacity = '');
       rail.style.transform = '';
       trace.remove();
       chapters.forEach(chapter => {chapter.hidden = false; chapter.style.visibility = ''; chapter.inert = false; chapter.removeAttribute('aria-hidden');});

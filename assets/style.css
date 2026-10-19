@@ -99,3 +99,9 @@ body,.hero,.projects,.page-heading,footer,.header,.intro,.join,.schedule,.commit
 .overview-card img{width:100%;height:100%;object-fit:contain}
 .overview-card span{position:absolute;bottom:0;left:0;right:0;padding:8px 12px;background:#102f46e8;color:var(--paper);font-size:15px}
 .overview-card:focus-visible{outline-offset:-4px}
+
+/* Fixed-frame vertical reveals share the text's scroll easing. */
+.project-image-stage{position:absolute;overflow:hidden;pointer-events:none;background:var(--dark);z-index:1}
+.project-image-stage[hidden]{display:none}
+.project-image-stage img{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:contain;background:var(--dark);will-change:transform}
+.projects.is-pinned .project-photo>img{opacity:0}
