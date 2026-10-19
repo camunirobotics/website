@@ -43,3 +43,7 @@ User-selected P1, the Combat team working in the FightFest pits, from Long Intro
 The four project chapters are Combat Robotics, Wise Angel, InMoov and Unibots UK. Minibots now has a separate beginner section beneath them, using the existing society report photograph and teaching-plan description. Unibots uses the group photograph from CuR Overview Presentation, slide 16: https://docs.google.com/presentation/d/1lnqt91fDp72NvNrqNw_KHjfofOkp7jQADfBuBOuTZOs/edit (includes visiting universities; exact capture date unconfirmed).
 
 The user supplied the Project Fund terms: grants of up to £250; applications require a project proposal and budget; funded projects present at the end of the year. No extra eligibility restrictions, deadlines or award guarantees were added.
+
+
+### Project overview choreography
+The pinned project sequence now opens with all four photographs. The overview adapts Componentry's Scroll Choreography trade / gather / expand keyframes from the user's local design-demo build (Componentry revision b602c2872fea85c9f2464016ce3bbe0af17b51b4). Combat expands into the existing right-hand photo frame, keeping the left project navigation fixed, then the prior rise/fade and gentle rotation/scale project transitions continue. The MIT notice is retained in assets/vendor/COMPONENTRY_LICENSE.txt. Mobile and reduced-motion visitors retain the normal stacked project layout.

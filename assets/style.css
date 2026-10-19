@@ -90,3 +90,12 @@ body,.hero,.projects,.page-heading,footer,.header,.intro,.join,.schedule,.commit
 .join{background-color:var(--blue);color:var(--paper)}
 .join .button{background:var(--mint);color:var(--ink)}
 @media(max-width:700px){.beginner-section,.fund-section{grid-template-columns:1fr;padding:55px var(--space);gap:30px}.beginner-copy p,.fund-section>div>p:not(.fund-amount){font-size:17px}.beginner-copy h2{font-size:38px}.fund-amount{font-size:22px;margin-top:14px}}
+
+/* The overview shares the pinned stage, leaving the project rail stationary. */
+.project-overview{display:none}
+.projects.is-pinned .project-overview{display:block;position:absolute;inset:0;overflow:hidden;z-index:2}
+.projects.is-pinned .project-overview[hidden]{display:none}
+.overview-card{position:absolute;display:block;background:var(--dark);overflow:hidden;box-shadow:0 12px 30px #071f3433}
+.overview-card img{width:100%;height:100%;object-fit:contain}
+.overview-card span{position:absolute;bottom:0;left:0;right:0;padding:8px 12px;background:#102f46e8;color:var(--paper);font-size:15px}
+.overview-card:focus-visible{outline-offset:-4px}
