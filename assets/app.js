@@ -73,7 +73,9 @@ if (window.gsap && window.ScrollTrigger) {
       const {w, h, x, y, fw, fh} = geometry;
       const move = clamp(t / .3), gather = clamp((t - .35) / .3);
       const expand = clamp((t - .7) / .2);
-      const fade = 1 - clamp((t - .75) / .1);
+      // Clear the lower cards while the stack still covers them. The expanding
+      // frame moves upward, exposing anything left underneath it.
+      const fade = 1 - clamp((t - .65) / .05);
       const cw = w * .44, ch = h * .24;
       // Combat starts top right and becomes the expanded image.
       const places = [[1,-1],[-1,-1],[1,1],[-1,1]];
@@ -86,7 +88,9 @@ if (window.gsap && window.ScrollTrigger) {
           top: i === 0 ? mix(top, y, expand) : top,
           width: i === 0 ? mix(cw, fw, expand) : cw,
           height: i === 0 ? mix(ch, fh, expand) : ch,
-          opacity: i === 0 ? 1 : fade, zIndex: i === 0 ? 4 : i});
+          opacity: i === 0 ? 1 : fade,
+          visibility: i === 0 || t < .7 ? 'visible' : 'hidden',
+          zIndex: i === 0 ? 4 : i});
         card.querySelector('span').style.opacity = String(1 - clamp((t - .28) / .12));
       });
       overview.hidden = progress >= introFraction;
