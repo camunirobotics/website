@@ -277,13 +277,16 @@ if (window.gsap && window.ScrollTrigger) {
 // rule moves, so wrapping and the accessible click area retain their normal flow.
 {
   const mobileGrid = matchMedia('(max-width: 700px)');
-  const rules = [...document.querySelectorAll('.text-link, .project-rail nav a, .society-activity:not(:last-child)')];
   const surfaces = new Map();
-  rules.forEach(rule => {
-    let surface = rule.parentElement;
-    while (surface && !getComputedStyle(surface).backgroundImage.includes('linear-gradient')) surface = surface.parentElement;
-    if (surface) surfaces.set(rule, surface);
-  });
+  function discoverRules() {
+    surfaces.clear();
+    document.querySelectorAll('.text-link, .project-rail nav a, .society-activity:not(:last-child), .calendar-event').forEach(rule => {
+      let surface = rule.parentElement;
+      while (surface && !getComputedStyle(surface).backgroundImage.includes('linear-gradient')) surface = surface.parentElement;
+      if (surface) surfaces.set(rule, surface);
+    });
+  }
+  discoverRules();
   let gridFrame;
   function alignMobileRules() {
     cancelAnimationFrame(gridFrame);
@@ -302,6 +305,7 @@ if (window.gsap && window.ScrollTrigger) {
   }
   const gridResize = new ResizeObserver(alignMobileRules);
   new Set(surfaces.values()).forEach(surface => gridResize.observe(surface));
+  document.addEventListener('calendar:updated', () => {discoverRules();new Set(surfaces.values()).forEach(surface => gridResize.observe(surface));alignMobileRules();});
   mobileGrid.addEventListener('change', alignMobileRules);
   window.addEventListener('resize', alignMobileRules);
   document.fonts.ready.then(alignMobileRules);

@@ -27,6 +27,8 @@ jobs:
         run: node scripts/build.mjs
       - name: Check links and page structure
         run: node scripts/check.mjs
+      - name: Check calendar parsing and fallback
+        run: node --test tests/calendar.test.mjs tests/calendar-source.test.mjs
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload website
