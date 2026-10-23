@@ -124,6 +124,27 @@ body,.hero,.projects,.page-heading,footer,.header,.intro,.join,.schedule,.commit
 .calendar-empty{font-size:17px;color:#446273}
 .calendar-links{display:flex;gap:30px;flex-wrap:wrap}
 .calendar-links .text-link{margin-top:0}
+.calendar-subscribe-trigger,.calendar-copy{background:none;color:inherit;border:0;border-bottom:1px solid currentColor;padding:0 0 5px;text-align:left}
+.calendar-subscribe{width:min(560px,calc(100% - 40px));max-height:calc(100dvh - 40px);padding:60px 40px 40px;border:1px solid var(--line);color:var(--ink);background-color:var(--paper);background-image:linear-gradient(rgba(138,180,197,.13) 1px,transparent 1px),linear-gradient(90deg,rgba(138,180,197,.13) 1px,transparent 1px);background-size:20px 20px}
+.calendar-subscribe::backdrop{background:rgba(16,47,70,.7)}
+.calendar-subscribe h2{font-size:36px;line-height:1.1;margin-bottom:20px}
+.calendar-subscribe p{font-size:18px}
+.calendar-subscribe-close{position:absolute;right:20px;top:16px;background:none;border:0;color:inherit;font-size:15px;padding:4px 0}
+.calendar-subscribe-close span{margin-left:8px}
+.calendar-subscribe-options{display:flex;flex-direction:column;gap:30px;margin:40px 0}
+.calendar-subscribe-options .text-link{display:flex;justify-content:space-between;gap:20px;margin:0;font-size:21px;padding-bottom:10px}
+.calendar-subscribe-options .text-link span{margin:0}
+.calendar-copy{font-size:16px;margin-top:0}
+.calendar-copy-status{font-size:14px;margin-left:15px;color:#446273}
+.calendar-view{display:block;width:fit-content;margin-top:30px;font-size:15px}
+.calendar-feed-url{display:block;width:100%;margin-top:20px;padding:10px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font:inherit;font-size:14px}
+.calendar-feed-url[hidden]{display:none}
+@media(max-width:700px){
+ .calendar-subscribe{padding:60px 20px 40px}
+ .calendar-subscribe h2{font-size:32px}
+ .calendar-subscribe-options .text-link{font-size:19px}
+ .calendar-subscribe-trigger,.calendar-copy{border-bottom-color:transparent}
+}
 .calendar-status{padding:15px 0;font-size:18px}
 .calendar-status[hidden]{display:none}
 .calendar-month+.calendar-month{margin-top:65px}

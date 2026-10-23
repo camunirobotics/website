@@ -5,6 +5,32 @@ if(host) {
   const status=host.querySelector('[data-calendar-status]');
   const list=host.querySelector('[data-calendar-events]');
   const sessions=host.querySelector('[data-calendar-sessions]');
+  const subscribe=host.querySelector('#calendar-subscribe');
+  const subscribeOpen=host.querySelector('[data-subscribe-open]');
+  const copyStatus=subscribe.querySelector('[data-copy-status]');
+  const feedInput=subscribe.querySelector('[data-feed-url-input]');
+  subscribeOpen.addEventListener('click',()=>{
+    copyStatus.textContent='';
+    feedInput.hidden=true;
+    subscribe.showModal();
+    host.dispatchEvent(new CustomEvent('calendar:updated',{bubbles:true}));
+  });
+  subscribe.querySelector('[data-subscribe-close]').addEventListener('click',()=>subscribe.close());
+  subscribe.addEventListener('click',event=>{
+    const bounds=subscribe.getBoundingClientRect();
+    if(event.target===subscribe && (event.clientX<bounds.left || event.clientX>bounds.right || event.clientY<bounds.top || event.clientY>bounds.bottom))subscribe.close();
+  });
+  subscribe.addEventListener('close',()=>subscribeOpen.focus({preventScroll:true}));
+  subscribe.querySelector('[data-calendar-copy]').addEventListener('click',async event=>{
+    try {
+      await navigator.clipboard.writeText(event.currentTarget.dataset.feedUrl);
+      copyStatus.textContent='Copied';
+    } catch {
+      feedInput.hidden=false;
+      feedInput.focus();
+      feedInput.select();
+    }
+  });
   let showingLive=false;
   const formats={month:new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/London',month:'long',year:'numeric'}),day:new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/London',weekday:'long',day:'numeric',month:'short'}),time:new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/London',hour:'2-digit',minute:'2-digit',hourCycle:'h23'})};
   const make=(tag,className,text)=>{const el=document.createElement(tag);if(className)el.className=className;if(text!==undefined)el.textContent=text;return el;};

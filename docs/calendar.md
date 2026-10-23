@@ -12,6 +12,12 @@ The page recognises labelled `Sign up:`, `Register:`, `Registration:`, `Booking:
 
 The site shows the next 120 days, up to 80 occurrences, in Europe/London time. All-day events remain all-day events. Past/cancelled occurrences are excluded. The bundled, unmodified ICAL.js 2.2.1 parser handles recurrence, exclusions and moved occurrences. License: assets/vendor/ICAL_LICENSE.txt. Upstream: https://github.com/kewisch/ical.js
 
+## Calendar subscriptions
+
+The page has one Subscribe to calendar button. It opens a native modal with a Google Calendar subscription link using the public calendar ID, a `webcal:` link for Apple Calendar / Outlook, and a Copy calendar link option. The modal supports keyboard focus, Escape, a Close button and clicking the backdrop. These point to the live Google calendar, independently of the website's saved fallback. The app link requires a registered calendar application; in Outlook on the web, use Add calendar > Subscribe from web and paste the public HTTPS feed URL from `server/calendar-config.json`. Calendar clients choose their refresh interval, so subscriptions do not necessarily update immediately.
+
+Google calls its public feed `basic.ics`. A browser download followed by an import is a one-time copy, not a live subscription, so the website no longer labels an HTTPS file download as Subscribe. The calendar name comes from the feed (CUR events), rather than that generic filename.
+
 ## One-time SRCF deployment
 
 Local development was updated to PHP 8.5.12 (released 21 October 2026). Use PHP 8.5.12 or a newer security release on hosting; a maintained PHP 8.4 installation must be at least 8.4.27. The HTTPS stream fetch uses the PHP 8.4+ response-header API. The hosting provider controls the server runtime; uploading this website does not upgrade SRCF's PHP installation.
