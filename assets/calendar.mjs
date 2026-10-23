@@ -11,12 +11,12 @@ if(host) {
   async function loadEvents() {
     host.setAttribute('aria-busy','true');
     try {
-      const {feed,events,source}=await loadCalendar({liveUrl:host.dataset.calendar,fallbackUrl:host.dataset.calendarFallback});
+      const {events,source}=await loadCalendar({liveUrl:host.dataset.calendar,fallbackUrl:host.dataset.calendarFallback});
       // If a refresh fails, keep the live timetable already on screen instead
       // of replacing it with an older bundled snapshot.
       if(source==='saved' && showingLive) {
-        status.textContent='Showing the last loaded timetable. Check the calendar for updates.';
-        status.hidden=false;
+        status.textContent='';
+        status.hidden=true;
         return;
       }
       const {oneOff,recurring}=splitEvents(events);
@@ -62,15 +62,12 @@ if(host) {
       list.replaceChildren(content);
       sessions.replaceChildren(recurringContent);
       showingLive=source==='live';
-      const savedAt=new Date(feed.updatedAt);
-      const savedDate=Number.isFinite(+savedAt)?new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/London',day:'numeric',month:'short',year:'numeric'}).format(savedAt):null;
-      status.textContent=source==='saved' ? `Showing the saved timetable${savedDate?' ('+savedDate+')':''}. Check the calendar for updates.` : (feed.stale?'Showing the last saved timetable. Check the calendar for recent changes.':'');
-      status.hidden=!status.textContent;
+      status.textContent='';
+      status.hidden=true;
       // Mobile grid rules follow newly loaded content too.
       host.dispatchEvent(new CustomEvent('calendar:updated',{bubbles:true}));
     } catch {
       if(!list.children.length && !sessions.children.length){status.textContent='The timetable is temporarily unavailable. Open the calendar to see upcoming events.';status.hidden=false;}
-      else if(showingLive){status.textContent='Showing the last loaded timetable. Check the calendar for updates.';status.hidden=false;}
     } finally{host.setAttribute('aria-busy','false');}
   }
   loadEvents();
